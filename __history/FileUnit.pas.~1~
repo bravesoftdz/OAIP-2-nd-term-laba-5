@@ -1,0 +1,73 @@
+unit FileUnit;
+
+interface
+
+uses
+  System.SysUtils;
+
+type
+//Тип "предпочтения" содержит информацию о минимальных/максимальных значениях
+//личных характеристик, которыми должен обладать партнёр.
+  TPreferences = record
+    age : byte;
+    height : byte;
+    weight : byte;
+  end;
+//Типизированный массив, двумя элементами ячейки которого являются записи
+//минимальных и максимальных требований к партнёру.
+  TRange = array [2] of TPreferences;
+//Тип запись "персональная информация". Содержит основные поля:
+  TPersonalInfo = Packed record
+    num : integer;                                       //порядковый номер,
+    name : string[40];                                   //имя,
+    age : byte;                                          //возраст,
+    height : byte;                                       //рост,
+    weight : byte;                                       //вес,
+    preferences : TRange;                                //предпочтения (в партнёре).
+  end;
+//Вышеописанный тип используется для чтения/записи из/в файл(а).
+  PTList = ^Tlist;
+  TList = record
+    name : string[40];
+    age : byte;
+    height : byte;
+    weight : byte;
+    preferences : TRange;
+    next : PTList;
+  end;
+
+const
+  MIN = 1;
+  MAX = 2;
+  MALE_INFO_FILE = 'male.myex';
+  FEMALE_INFO_FILE = 'female.myex';
+
+//процедура открывает файл, если он существует,
+//иначе возвращает false в переменной fileIsOpened.
+  procedure Openfile (fileName : string; out fileIsOpened : boolean);
+//процедура создаёт новый файл; если файл ранее существовал, то перезаписывает его.
+  procedure CreateFile (fileName : string);
+implementation
+
+procedure Openfile (fileName : string; out fileIsOpened : boolean);
+var
+  F : file of TPersonalInfo;
+begin
+  AssignFile(F, fileName);
+  if FileExists(fileName) then
+  begin
+    Reset(F);
+    fileIsOpened := true;
+  end else fileIsOpened := false;
+end;
+
+procedure CreateFile (fileName : string);
+var
+  F : file of TPersonalInfo;
+begin
+  AssignFile(F, fileName);
+  Rewrite (F);
+end;
+
+
+end.
