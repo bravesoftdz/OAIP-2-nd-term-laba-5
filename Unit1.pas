@@ -155,4 +155,11 @@ begin
   else if client1.height < client1.height then dec(Result);
 end;
 
+//функция проверяет, входит ли передаваемое значение в диапазон
+//возвращает TRUE, если входит, FALSE, если нет
+function ParameterInDiapason(param : TMyCountType; var diapason : TDiapason) : boolean;
+begin
+  Result := (param >= diapason[MIN]) and (param <= diapason[MAX]);
+end;
+
 end.
