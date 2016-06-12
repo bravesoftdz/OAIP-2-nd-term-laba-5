@@ -2,7 +2,7 @@ object Form3: TForm3
   Left = 0
   Top = 0
   Caption = 'Form3'
-  ClientHeight = 205
+  ClientHeight = 249
   ClientWidth = 536
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -52,7 +52,7 @@ object Form3: TForm3
     Font.Style = []
     ParentFont = False
   end
-  object Label4: TLabel
+  object HeightLabel: TLabel
     Left = 8
     Top = 125
     Width = 33
@@ -65,12 +65,12 @@ object Form3: TForm3
     Font.Style = []
     ParentFont = False
   end
-  object Label5: TLabel
+  object WeightLabel: TLabel
     Left = 8
     Top = 165
     Width = 24
     Height = 19
-    Caption = #1042#1077#1079
+    Caption = #1042#1077'c'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -16
@@ -91,7 +91,7 @@ object Form3: TForm3
     Font.Style = []
     ParentFont = False
   end
-  object Label7: TLabel
+  object MinimumLabel: TLabel
     Left = 296
     Top = 45
     Width = 67
@@ -104,12 +104,12 @@ object Form3: TForm3
     Font.Style = []
     ParentFont = False
   end
-  object Label8: TLabel
+  object MaximumLabel: TLabel
     Left = 432
     Top = 45
-    Width = 67
+    Width = 72
     Height = 19
-    Caption = #1052#1080#1085#1080#1084#1091#1084
+    Caption = #1052#1072#1082#1089#1080#1084#1091#1084
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -16
@@ -119,12 +119,14 @@ object Form3: TForm3
   end
   object Splitter2: TSplitter
     Left = 264
-    Top = 1
+    Top = 0
     Width = 2
     Height = 208
     Align = alNone
+    Color = clSilver
+    ParentColor = False
   end
-  object Edit1: TEdit
+  object NameEdit: TEdit
     Left = 68
     Top = 42
     Width = 177
@@ -137,7 +139,7 @@ object Form3: TForm3
     ParentFont = False
     TabOrder = 0
   end
-  object Edit2: TEdit
+  object AgeEdit: TEdit
     Left = 68
     Top = 82
     Width = 177
@@ -150,7 +152,7 @@ object Form3: TForm3
     ParentFont = False
     TabOrder = 1
   end
-  object Edit3: TEdit
+  object HeightEdit: TEdit
     Left = 68
     Top = 122
     Width = 177
@@ -163,7 +165,7 @@ object Form3: TForm3
     ParentFont = False
     TabOrder = 2
   end
-  object Edit4: TEdit
+  object WeightEdit: TEdit
     Left = 68
     Top = 162
     Width = 177
@@ -176,7 +178,7 @@ object Form3: TForm3
     ParentFont = False
     TabOrder = 3
   end
-  object Edit6: TEdit
+  object AgeMaxLabel: TEdit
     Left = 416
     Top = 82
     Width = 97
@@ -189,7 +191,7 @@ object Form3: TForm3
     ParentFont = False
     TabOrder = 4
   end
-  object Edit5: TEdit
+  object AgeMinLabel: TEdit
     Left = 280
     Top = 82
     Width = 97
@@ -202,7 +204,7 @@ object Form3: TForm3
     ParentFont = False
     TabOrder = 5
   end
-  object Edit7: TEdit
+  object HeightMaxLable: TEdit
     Left = 416
     Top = 122
     Width = 97
@@ -215,7 +217,7 @@ object Form3: TForm3
     ParentFont = False
     TabOrder = 6
   end
-  object Edit8: TEdit
+  object HeightMinLabel: TEdit
     Left = 280
     Top = 122
     Width = 97
@@ -228,7 +230,7 @@ object Form3: TForm3
     ParentFont = False
     TabOrder = 7
   end
-  object Edit9: TEdit
+  object WeightMaxLable: TEdit
     Left = 416
     Top = 162
     Width = 97
@@ -241,7 +243,7 @@ object Form3: TForm3
     ParentFont = False
     TabOrder = 8
   end
-  object Edit10: TEdit
+  object WeightMinLabel: TEdit
     Left = 280
     Top = 162
     Width = 97
@@ -253,5 +255,22 @@ object Form3: TForm3
     Font.Style = []
     ParentFont = False
     TabOrder = 9
+  end
+  object BackButton: TButton
+    Left = 112
+    Top = 216
+    Width = 75
+    Height = 25
+    Caption = #1053#1072#1079#1072#1076
+    TabOrder = 10
+    OnClick = BackButtonClick
+  end
+  object AddButton: TButton
+    Left = 360
+    Top = 216
+    Width = 75
+    Height = 25
+    Caption = #1044#1086#1073#1072#1074#1080#1090#1100
+    TabOrder = 11
   end
 end

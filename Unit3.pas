@@ -8,25 +8,28 @@ uses
 
 type
   TForm3 = class(TForm)
-    Edit1: TEdit;
+    NameEdit: TEdit;
     ClientInfoLabel: TLabel;
     NameLabel: TLabel;
     AgeLabel: TLabel;
-    Edit2: TEdit;
-    Edit3: TEdit;
-    Label4: TLabel;
-    Label5: TLabel;
-    Edit4: TEdit;
+    AgeEdit: TEdit;
+    HeightEdit: TEdit;
+    HeightLabel: TLabel;
+    WeightLabel: TLabel;
+    WeightEdit: TEdit;
     PartnerInfoLabel: TLabel;
-    Label7: TLabel;
-    Edit6: TEdit;
-    Edit5: TEdit;
-    Label8: TLabel;
-    Edit7: TEdit;
-    Edit8: TEdit;
-    Edit9: TEdit;
-    Edit10: TEdit;
+    MinimumLabel: TLabel;
+    AgeMaxLabel: TEdit;
+    AgeMinLabel: TEdit;
+    MaximumLabel: TLabel;
+    HeightMaxLable: TEdit;
+    HeightMinLabel: TEdit;
+    WeightMaxLable: TEdit;
+    WeightMinLabel: TEdit;
     Splitter2: TSplitter;
+    BackButton: TButton;
+    AddButton: TButton;
+    procedure BackButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -39,5 +42,10 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TForm3.BackButtonClick(Sender: TObject);
+begin
+  Form3.Close;
+end;
 
 end.

@@ -32,6 +32,7 @@ type
   //является элементом структуры TList
   TClient = class(TObject)
   private
+    client : TClientItem;
     name : TName;                                 //имя
     age : TMyCountType;                           //возраст
     weight : TMyCountType;                        //вес
@@ -100,6 +101,7 @@ type
     procedure FormActivate(Sender: TObject);
     procedure CreateManList;
     procedure CreateWomanList;
+    procedure ManAddButtonClick(Sender: TObject);
   private
     manList : TList;
     womanList : TList;
@@ -116,6 +118,9 @@ procedure CreateList(var list : TList; const fileName : string);
 implementation
 
 {$R *.dfm}
+
+uses
+  Unit3;
 
 //создане новой учётной записи клиента
 constructor TClient.Create(const clientItem : TClientItem);
@@ -239,6 +244,11 @@ procedure TForm1.FormActivate(Sender: TObject);
 begin
   Form1.CreateManList;
   Form1.CreateWomanList;
+end;
+
+procedure TForm1.ManAddButtonClick(Sender: TObject);
+begin
+  Unit3.Form3.Show;
 end;
 
 end.
