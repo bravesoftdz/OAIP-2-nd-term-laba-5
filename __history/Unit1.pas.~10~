@@ -1,0 +1,158 @@
+unit Unit1;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs;
+
+const
+  MIN = 1;
+  MAX = 2;
+
+type
+  TMyCountType = byte;
+  //тип массив, хранящий данные о желаемых минимальных и максимальных параметрах партнёра
+  TDiapason = array [MIN..MAX] of TMyCountType;
+  TName = string[50];
+
+  //класс клиент, хранит персональные данные о клиенте
+  //является элементом структуры TList
+  TClient = class
+  private
+    name : TName;                                 //имя
+    age : TMyCountType;                           //возраст
+    weight : TMyCountType;                        //вес
+    height : TMyCountType;                        //рост
+    partnerAge : TDiapason;                       //диапазон возраста партнёра
+    partnerWeight : TDiapason;                    //диапазон веса партнёра
+    partnerHeight : TDiapason;                    //диапазон ромта парнёра
+  public
+    //свойство изменения имени клиента
+    property clientName : TName
+      read name write name;
+    //свойство изменения возраста клиента
+    property clientAge : TMyCountType
+      read age write age;
+    //свойство изменения веса клиента
+    property clientWeight : TMyCountType
+      read weight write weight;
+    //свойство изменения роста клиента
+    property clientHeight : TMyCountType
+      read height write height;
+    //свойство изменения минимального возраста партнёра
+    property partnerAgeMin : TMyCountType
+      read partnerAge[MIN] write partnerAge[MIN];
+    //свойство изменения максимального возраста партнёра
+    property partnerAgeMax : TMyCountType
+      read partnerAge[MAX] write partnerAge[MAX];
+    //свойство изменения минмимального веса партнёра
+    property partnerWeightMin : TMyCountType
+      read partnerWeight[MIN] write partnerWeight[MAX];
+    //свойство изменения максимального веса партнёра
+    property partnerWeightMax : TMyCountType
+      read partnerWeight[MAX] write partnerWeight[MAX];
+    //свойство изменения минимального роста партнёра
+    property partnerHeightMin : TMyCountType
+      read partnerHeight[MIN] write partnerHeight[MIN];
+    //свойство изменения максимального роста партнёра
+    property partnerHeightMax : TMyCountType
+      read partnerHeight[MAX] write partnerHeight[MAX];
+
+    constructor Create (const name : TName; const age : TMyCountType;
+                        const weight : TMyCountType; const height : TMyCountType;
+                        const partnerAge : TDiapason; const partnerWeight : TDiapason;
+                        const partnerHeight : TDiapason);
+  end;
+
+  TForm1 = class(TForm)
+  private
+    ClientList : TList;
+  public
+    { Public declarations }
+  end;
+
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+constructor TClient.Create (const name : TName; const age : TMyCountType;
+                        const weight : TMyCountType; const height : TMyCountType;
+                        const partnerAge : TDiapason; const partnerWeight : TDiapason;
+                        const partnerHeight : TDiapason);
+begin
+  //сохранение переданных результатов
+  self.name := name;
+  self.age := age;
+  self.weight := weight;
+  self.height := height;
+  self.partnerAge := partnerAge;
+  self.partnerWeight := partnerWeight;
+  self.partnerHeight := partnerHeight;
+end;
+
+//функция сравнения по имени
+//возвращает 1, если имя1 > имени2
+//возвращает 0, если имя1 = имени2
+//возвращает -1, если имя1 < имени2
+function CompareByName(Item1 : Pointer; Item2 : Pointer) : integer;
+var
+  client1, client2 : TClient;
+begin
+  Result := 0;
+  client1 := TClient(Item1);
+  client2 := TClient(Item2);
+  if client1.name > client2.name then inc(Result)
+  else if client1.name < client1.name then dec(Result);
+end;
+
+//функция сравнения по возрасту
+//возвращает 1, если возраст1 > возраста2
+//возвращает 0, если возраст1 = возрасту2
+//возвращает -1, если возраст1 < возраста2
+function CompareByAge(Item1 : Pointer; Item2 : Pointer) : integer;
+var
+  client1, client2 : TClient;
+begin
+  Result := 0;
+  client1 := TClient(Item1);
+  client2 := TClient(Item2);
+  if client1.age > client2.age then inc(Result)
+  else if client1.age < client1.age then dec(Result);
+end;
+
+//функция сравнения по весу
+//возвращает 1, если вес1 > веса2
+//возвращает 0, если вес1 = весу2
+//возвращает -1, если веса1 < веса2
+function CompareByWeight(Item1 : Pointer; Item2 : Pointer) : integer;
+var
+  client1, client2 : TClient;
+begin
+  Result := 0;
+  client1 := TClient(Item1);
+  client2 := TClient(Item2);
+  if client1.weight > client2.weight then inc(Result)
+  else if client1.weight < client1.weight then dec(Result);
+end;
+
+//функция сравнения по росту
+//возвращает 1, если рост1 > роста2
+//возвращает 0, если рост1 = росту2
+//возвращает -1, если рост1 < роста2
+function CompareByHeight(Item1 : Pointer; Item2 : Pointer) : integer;
+var
+  client1, client2 : TClient;
+begin
+  Result := 0;
+  client1 := TClient(Item1);
+  client2 := TClient(Item2);
+  if client1.height > client2.height then inc(Result)
+  else if client1.height < client1.height then dec(Result);
+end;
+
+end.

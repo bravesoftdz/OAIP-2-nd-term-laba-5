@@ -4,11 +4,16 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Imaging.pngimage,
+  Vcl.ExtCtrls;
 
 const
   MIN = 1;
   MAX = 2;
+  MAN = TRUE;
+  WOMAT = FALSE;
+  WOMAN_INFO = 'woman.myext';
+  MAN_INFO = 'man.myext';
 
 type
   TMyCountType = byte;
@@ -18,7 +23,7 @@ type
 
   //класс клиент, хранит персональные данные о клиенте
   //является элементом структуры TList
-  TClient = class
+  TClient = class(TObject)
   private
     name : TName;                                 //имя
     age : TMyCountType;                           //возраст
@@ -58,16 +63,38 @@ type
     //свойство изменения максимального роста партнёра
     property partnerHeightMax : TMyCountType
       read partnerHeight[MAX] write partnerHeight[MAX];
-
+    //конструктор создания учётной записи
     constructor Create (const name : TName; const age : TMyCountType;
                         const weight : TMyCountType; const height : TMyCountType;
                         const partnerAge : TDiapason; const partnerWeight : TDiapason;
                         const partnerHeight : TDiapason);
   end;
 
+  TClientRecord = record
+    name : TName;
+    age : TMyCountType;
+    weight : TMyCountType;                        //вес
+    height : TMyCountType;                        //рост
+    partnerAge : TDiapason;                       //диапазон возраста партнёра
+    partnerWeight : TDiapason;                    //диапазон веса партнёра
+    partnerHeight : TDiapason;
+  end;
+
   TForm1 = class(TForm)
+    ListBox1: TListBox;
+    ListBox2: TListBox;
+    AgreeManButton: TButton;
+    AgreeWomanButton: TButton;
+    Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    Button4: TButton;
+    Button5: TButton;
+    Button6: TButton;
+    Image1: TImage;
   private
-    ClientList : TList;
+    manList : TList;
+    womanList : TList;
   public
     { Public declarations }
   end;
@@ -76,10 +103,13 @@ type
 var
   Form1: TForm1;
 
+procedure CreateList(var list : TList; flag : boolean);
+
 implementation
 
 {$R *.dfm}
 
+//создане новой учётной записи клиента
 constructor TClient.Create (const name : TName; const age : TMyCountType;
                         const weight : TMyCountType; const height : TMyCountType;
                         const partnerAge : TDiapason; const partnerWeight : TDiapason;
@@ -160,6 +190,23 @@ end;
 function ParameterInDiapason(param : TMyCountType; var diapason : TDiapason) : boolean;
 begin
   Result := (param >= diapason[MIN]) and (param <= diapason[MAX]);
+end;
+
+procedure CreateManList;
+begin
+  Form1.manList := TList.Create;
+  CreateList(Form1.manList);
+end;
+
+procedure CreateWomanList;
+begin
+  Form1.womanList := TList.Create;
+  CreateList(Form1.womanList);
+end;
+
+procedure CreateList(var list : TList; flag : boolean);
+begin
+
 end;
 
 end.
