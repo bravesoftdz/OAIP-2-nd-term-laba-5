@@ -101,6 +101,7 @@ type
     procedure FormActivate(Sender: TObject);
     procedure CreateManList;
     procedure CreateWomanList;
+    procedure WomanAddButtonClick(Sender: TObject);
     procedure ManAddButtonClick(Sender: TObject);
   private
     manList : TList;
@@ -228,11 +229,11 @@ begin
     begin
       Read(F, clientItem);
       client := TClient.Create(clientItem);
+      list.Add(client)
     end;
   finally
     CloseFile(F);
   end;
-
 end;
 
 procedure TForm1.CloseImageClick(Sender: TObject);
@@ -251,4 +252,11 @@ begin
   Unit3.Form3.Show;
 end;
 
+procedure TForm1.WomanAddButtonClick(Sender: TObject);
+begin
+  Unit3.Form3.Show;
+end;
+
 end.
+
+

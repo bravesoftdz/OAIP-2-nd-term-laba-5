@@ -178,7 +178,7 @@ object Form3: TForm3
     ParentFont = False
     TabOrder = 3
   end
-  object AgeMaxLabel: TEdit
+  object AgeMaxEdit: TEdit
     Left = 416
     Top = 82
     Width = 97
@@ -191,7 +191,7 @@ object Form3: TForm3
     ParentFont = False
     TabOrder = 4
   end
-  object AgeMinLabel: TEdit
+  object AgeMinEdit: TEdit
     Left = 280
     Top = 82
     Width = 97
@@ -204,7 +204,7 @@ object Form3: TForm3
     ParentFont = False
     TabOrder = 5
   end
-  object HeightMaxLable: TEdit
+  object HeightMaxEdit: TEdit
     Left = 416
     Top = 122
     Width = 97
@@ -217,7 +217,7 @@ object Form3: TForm3
     ParentFont = False
     TabOrder = 6
   end
-  object HeightMinLabel: TEdit
+  object HeightMinEdit: TEdit
     Left = 280
     Top = 122
     Width = 97
@@ -230,7 +230,7 @@ object Form3: TForm3
     ParentFont = False
     TabOrder = 7
   end
-  object WeightMaxLable: TEdit
+  object WeightMaxEdit: TEdit
     Left = 416
     Top = 162
     Width = 97
@@ -243,7 +243,7 @@ object Form3: TForm3
     ParentFont = False
     TabOrder = 8
   end
-  object WeightMinLabel: TEdit
+  object WeightMinEdit: TEdit
     Left = 280
     Top = 162
     Width = 97
@@ -272,5 +272,6 @@ object Form3: TForm3
     Height = 25
     Caption = #1044#1086#1073#1072#1074#1080#1090#1100
     TabOrder = 11
+    OnClick = AddButtonClick
   end
 end
