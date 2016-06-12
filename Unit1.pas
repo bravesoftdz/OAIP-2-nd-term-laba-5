@@ -32,7 +32,6 @@ type
   //€вл€етс€ элементом структуры TList
   TClient = class(TObject)
   private
-    client : TClientItem;
     name : TName;                                 //им€
     age : TMyCountType;                           //возраст
     weight : TMyCountType;                        //вес
@@ -97,17 +96,19 @@ type
     WomanChangeButton: TButton;
     WomanDeleteButton: TButton;
     CloseImage: TImage;
+    RefreshImage: TImage;
     procedure CloseImageClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure CreateManList;
     procedure CreateWomanList;
     procedure WomanAddButtonClick(Sender: TObject);
     procedure ManAddButtonClick(Sender: TObject);
+    procedure RefreshImageClick(Sender: TObject);
   private
+
+  public
     manList : TList;
     womanList : TList;
-  public
-    { Public declarations }
   end;
 
 
@@ -245,6 +246,22 @@ procedure TForm1.FormActivate(Sender: TObject);
 begin
   Form1.CreateManList;
   Form1.CreateWomanList;
+end;
+
+procedure TForm1.RefreshImageClick(Sender: TObject);
+var
+  i : integer;
+begin
+  for i := 0 to manList.Count - 1 do
+    Form1.ManListBox.Items.Add(TClient(manList[i]).name + ', ' +
+                               intToStr(TClient(manList[i]).age) + ', ' +
+                               intToStr(TClient(manList[i]).height) + ', ' +
+                               intToStr(TClient(manList[i]).weight));
+  for i := 0 to womanList.Count - 1 do
+    Form1.WomanListBox.Items.Add(TClient(WomanList[i]).name + ', ' +
+                               intToStr(TClient(WomanList[i]).age) + ', ' +
+                               intToStr(TClient(WomanList[i]).height) + ', ' +
+                               intToStr(TClient(WomanList[i]).weight))
 end;
 
 procedure TForm1.ManAddButtonClick(Sender: TObject);
