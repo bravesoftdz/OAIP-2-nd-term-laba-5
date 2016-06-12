@@ -10,10 +10,8 @@ uses
 const
   MIN = 1;
   MAX = 2;
-  MAN = TRUE;
-  WOMAT = FALSE;
-  WOMAN_INFO = 'woman.myext';
-  MAN_INFO = 'man.myext';
+  WOMAN_FILE = 'woman.myext';
+  MAN_FILE = 'man.myext';
 
 type
   TMyCountType = byte;
@@ -21,6 +19,15 @@ type
   TDiapason = array [MIN..MAX] of TMyCountType;
   TName = string[50];
 
+  TClientItem = record
+    name : TName;                                 //имя
+    age : TMyCountType;                           //возраст
+    weight : TMyCountType;                        //вес
+    height : TMyCountType;                        //рост
+    partnerAge : TDiapason;                       //диапазон возраста партнёра
+    partnerWeight : TDiapason;                    //диапазон веса партнёра
+    partnerHeight : TDiapason;                    //диапазон ромта парнёра
+  end;
   //класс клиент, хранит персональные данные о клиенте
   //является элементом структуры TList
   TClient = class(TObject)
@@ -31,7 +38,7 @@ type
     height : TMyCountType;                        //рост
     partnerAge : TDiapason;                       //диапазон возраста партнёра
     partnerWeight : TDiapason;                    //диапазон веса партнёра
-    partnerHeight : TDiapason;                    //диапазон ромта парнёра
+    partnerHeight : TDiapason;                    //диапазон роcта парнёра
   public
     //свойство изменения имени клиента
     property clientName : TName
@@ -64,10 +71,7 @@ type
     property partnerHeightMax : TMyCountType
       read partnerHeight[MAX] write partnerHeight[MAX];
     //конструктор создания учётной записи
-    constructor Create (const name : TName; const age : TMyCountType;
-                        const weight : TMyCountType; const height : TMyCountType;
-                        const partnerAge : TDiapason; const partnerWeight : TDiapason;
-                        const partnerHeight : TDiapason);
+    constructor Create(const clientItem : TClientItem);
   end;
 
   TClientRecord = record
@@ -81,17 +85,21 @@ type
   end;
 
   TForm1 = class(TForm)
-    ListBox1: TListBox;
-    ListBox2: TListBox;
-    AgreeManButton: TButton;
-    AgreeWomanButton: TButton;
-    Button1: TButton;
-    Button2: TButton;
-    Button3: TButton;
-    Button4: TButton;
-    Button5: TButton;
-    Button6: TButton;
-    Image1: TImage;
+    WomanListBox: TListBox;
+    ManListBox: TListBox;
+    ManAgreeButton: TButton;
+    WomanAgreeButton: TButton;
+    ManAddButton: TButton;
+    ManChangeButton: TButton;
+    ManDeleteButton: TButton;
+    WomanAddButton: TButton;
+    WomanChangeButton: TButton;
+    WomanDeleteButton: TButton;
+    CloseImage: TImage;
+    procedure CloseImageClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure CreateManList;
+    procedure CreateWomanList;
   private
     manList : TList;
     womanList : TList;
@@ -103,26 +111,23 @@ type
 var
   Form1: TForm1;
 
-procedure CreateList(var list : TList; flag : boolean);
+procedure CreateList(var list : TList; const fileName : string);
 
 implementation
 
 {$R *.dfm}
 
 //создане новой учётной записи клиента
-constructor TClient.Create (const name : TName; const age : TMyCountType;
-                        const weight : TMyCountType; const height : TMyCountType;
-                        const partnerAge : TDiapason; const partnerWeight : TDiapason;
-                        const partnerHeight : TDiapason);
+constructor TClient.Create(const clientItem : TClientItem);
 begin
   //сохранение переданных результатов
-  self.name := name;
-  self.age := age;
-  self.weight := weight;
-  self.height := height;
-  self.partnerAge := partnerAge;
-  self.partnerWeight := partnerWeight;
-  self.partnerHeight := partnerHeight;
+  self.name := ClientItem.name;
+  self.age := ClientItem.age;
+  self.weight := ClientItem.weight;
+  self.height := ClientItem.height;
+  self.partnerAge := ClientItem.partnerAge;
+  self.partnerWeight := ClientItem.partnerWeight;
+  self.partnerHeight := ClientItem.partnerHeight;
 end;
 
 //функция сравнения по имени
@@ -192,21 +197,48 @@ begin
   Result := (param >= diapason[MIN]) and (param <= diapason[MAX]);
 end;
 
-procedure CreateManList;
+procedure TForm1.CreateManList;
 begin
   Form1.manList := TList.Create;
-  CreateList(Form1.manList);
+  CreateList(Form1.manList, MAN_FILE);
 end;
 
-procedure CreateWomanList;
+procedure TForm1.CreateWomanList;
 begin
   Form1.womanList := TList.Create;
-  CreateList(Form1.womanList);
+  CreateList(Form1.womanList, WOMAN_FILE);
 end;
 
-procedure CreateList(var list : TList; flag : boolean);
+procedure CreateList(var list : TList; const fileName : string);
+var
+  F : file of TClientItem;
+  clientItem : TClientItem;
+  client : TClient;
 begin
+  AssignFile(F, fileName);
+  if FileExists(fileName) then
+  try
+    Reset(F);
+    while not EOF(F) do
+    begin
+      Read(F, clientItem);
+      client := TClient.Create(clientItem);
+    end;
+  finally
+    CloseFile(F);
+  end;
 
+end;
+
+procedure TForm1.CloseImageClick(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TForm1.FormActivate(Sender: TObject);
+begin
+  Form1.CreateManList;
+  Form1.CreateWomanList;
 end;
 
 end.

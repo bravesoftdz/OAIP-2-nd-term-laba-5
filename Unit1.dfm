@@ -11,9 +11,10 @@ object Form1: TForm1
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnActivate = FormActivate
   PixelsPerInch = 96
   TextHeight = 13
-  object Image1: TImage
+  object CloseImage: TImage
     Left = 776
     Top = 233
     Width = 57
@@ -986,8 +987,9 @@ object Form1: TForm1
       2E6F72679BEE3C1A00000016744558745469746C650052656420506F77657220
       427574746F6EAB1E7D080000000049454E44AE426082}
     Proportional = True
+    OnClick = CloseImageClick
   end
-  object ListBox1: TListBox
+  object WomanListBox: TListBox
     Left = 432
     Top = 16
     Width = 329
@@ -995,7 +997,7 @@ object Form1: TForm1
     ItemHeight = 13
     TabOrder = 0
   end
-  object ListBox2: TListBox
+  object ManListBox: TListBox
     Left = 8
     Top = 16
     Width = 329
@@ -1003,7 +1005,7 @@ object Form1: TForm1
     ItemHeight = 13
     TabOrder = 1
   end
-  object AgreeManButton: TButton
+  object ManAgreeButton: TButton
     Left = 343
     Top = 104
     Width = 75
@@ -1011,7 +1013,7 @@ object Form1: TForm1
     Caption = #1057#1086#1075#1083#1072#1089#1077#1085
     TabOrder = 2
   end
-  object AgreeWomanButton: TButton
+  object WomanAgreeButton: TButton
     Left = 767
     Top = 104
     Width = 73
@@ -1019,7 +1021,7 @@ object Form1: TForm1
     Caption = #1057#1086#1075#1083#1072#1089#1085#1072
     TabOrder = 3
   end
-  object Button1: TButton
+  object ManAddButton: TButton
     Left = 24
     Top = 263
     Width = 75
@@ -1027,15 +1029,15 @@ object Form1: TForm1
     Caption = #1044#1086#1073#1072#1074#1080#1090#1100
     TabOrder = 4
   end
-  object Button2: TButton
+  object ManChangeButton: TButton
     Left = 136
-    Top = 263
+    Top = 265
     Width = 73
     Height = 25
     Caption = #1048#1079#1084#1077#1085#1080#1090#1100
     TabOrder = 5
   end
-  object Button3: TButton
+  object ManDeleteButton: TButton
     Left = 248
     Top = 263
     Width = 75
@@ -1043,7 +1045,7 @@ object Form1: TForm1
     Caption = #1059#1076#1072#1083#1080#1090#1100
     TabOrder = 6
   end
-  object Button4: TButton
+  object WomanAddButton: TButton
     Left = 448
     Top = 263
     Width = 73
@@ -1051,7 +1053,7 @@ object Form1: TForm1
     Caption = #1044#1086#1073#1072#1074#1080#1090#1100
     TabOrder = 7
   end
-  object Button5: TButton
+  object WomanChangeButton: TButton
     Left = 560
     Top = 263
     Width = 73
@@ -1059,7 +1061,7 @@ object Form1: TForm1
     Caption = #1048#1079#1084#1077#1085#1080#1090#1100
     TabOrder = 8
   end
-  object Button6: TButton
+  object WomanDeleteButton: TButton
     Left = 672
     Top = 263
     Width = 75
