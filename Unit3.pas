@@ -41,9 +41,11 @@ type
 var
   Form3: TForm3;
   client : PTClientList;
+  changed : boolean;
 
-procedure AddClient(var list : PTClientList);
+procedure AddClientRecord(var list : PTClientList);
 procedure ChangeClientInfo(var list : PTClientList; count : integer);
+procedure DeleteClientRecord(var list : PTClientList; count : integer);
 
 implementation
 
@@ -58,9 +60,25 @@ begin
             (Form3.HeightMinEdit.Text <> '') and (Form3.HeightMaxEdit.Text <> '');
 end;
 
-procedure AddClient(var list : PTClientList);
+procedure ClearFields;
 begin
+  Form3.NameEdit.Clear;
+  Form3.AgeEdit.Clear;
+  Form3.WeightEdit.Clear;
+  Form3.HeightEdit.Clear;
+  Form3.AgeMinEdit.Clear;
+  Form3.AgeMaxEdit.Clear;
+  Form3.WeightMinEdit.Clear;
+  Form3.WeightMaxEdit.Clear;
+  Form3.HeightMinEdit.Clear;
+  Form3.HeightMaxEdit.Clear;
+end;
+
+procedure AddClientRecord(var list : PTClientList);
+begin
+  ClearFields;
   form3.Show;
+  changed := false;
   client := list;
   while client^.next <> nil do client := client^.next;
   new(client^.next);
@@ -68,12 +86,40 @@ begin
   new(client^.data);
 end;
 
+procedure FillFields;
+begin
+  Form3.NameEdit.Text := client^.data^.name;
+  Form3.AgeEdit.Text := intToStr(client^.data^.age);
+  Form3.WeightEdit.Text := intToStr(client^.data^.weight);
+  Form3.HeightEdit.Text := intToStr(client^.data^.height);
+  Form3.AgeMinEdit.Text := intToStr(client^.data^.partnerAge[MIN]);
+  Form3.AgeMaxEdit.Text := intToStr(client^.data^.partnerAge[MAX]);
+  Form3.WeightMinEdit.Text := intToStr(client^.data^.partnerWeight[MIN]);
+  Form3.WeightMaxEdit.Text := intToStr(client^.data^.partnerWeight[MAX]);
+  Form3.HeightMinEdit.Text := intToStr(client^.data^.partnerHeight[MIN]);
+  Form3.HeightMaxEdit.Text := intToStr(client^.data^.partnerHeight[MAX]);
+end;
+
 procedure ChangeClientInfo(var list : PTClientList; count : integer);
 var
   i : integer;
 begin
+  form3.Show;
+  FillFields;
   client := list;
   for i := 0 to count do client := client^.next;
+end;
+
+procedure DeleteClientRecord(var list : PTClientList; count : integer);
+var
+  i : integer;
+  pnt, temp : PTClientList;
+begin
+  pnt := list;
+  for i := 0 to count - 1 do pnt := pnt^.next;
+  temp := pnt^.next;
+  pnt^.next := pnt^.next^.next;
+  Dispose(temp);
 end;
 
 procedure TForm3.AddButtonClick(Sender: TObject);
