@@ -30,8 +30,8 @@ type
     BackButton: TButton;
     AddButton: TButton;
     procedure BackButtonClick(Sender: TObject);
-    procedure AddButtonClick(Sender: TObject);
     function CheckInputData : boolean;
+    procedure AddButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -40,38 +40,14 @@ type
 
 var
   Form3: TForm3;
-  customer : TClient;
+  client : PTClientList;
+
+procedure AddClient(var list : PTClientList);
+procedure ChangeClientInfo(var list : PTClientList; count : integer);
 
 implementation
 
 {$R *.dfm}
-
-
-procedure TForm3.AddButtonClick(Sender: TObject);
-var
-  item : TClientItem;
-begin
-  if Form3.CheckInputData then
-  try
-    item.name := Form3.NameEdit.Text;
-    item.age := strToInt(Form3.AgeEdit.Text);
-    item.height := strToInt(Form3.HeightEdit.Text);
-    item.weight := strToInt(Form3.WeightEdit.Text);
-    item.partnerAge[MIN] := strToInt(Form3.AgeMinEdit.Text);
-    item.partnerAge[MAX] := strToInt(Form3.AgeMaxEdit.Text);
-    item.partnerWeight[MIN] := strToInt(Form3.WeightMinEdit.Text);
-    item.partnerWeight[MAX] := strToInt(Form3.WeightMaxEdit.Text);
-    item.partnerHeight[MIN] := strToInt(Form3.HeightMinEdit.Text);
-    item.partnerHeight[MAX] := strToInt(Form3.HeightMaxEdit.Text);
-    customer := TClient.Create(item);
-    form1.manList.Add(Unit3.customer);
-    customer.Free;
-    customer := nil;
-    Form3.Close;
-  except
-    ShowMessage('Фигня');
-  end;
-end;
 
 function TForm3.CheckInputData : boolean;
 begin
@@ -80,6 +56,44 @@ begin
             (Form3.AgeMinEdit.Text <> '') and (Form3.AgeMaxEdit.Text <> '') and
             (Form3.WeightMinEdit.Text <> '') and (Form3.WeightMaxEdit.Text <> '') and
             (Form3.HeightMinEdit.Text <> '') and (Form3.HeightMaxEdit.Text <> '');
+end;
+
+procedure AddClient(var list : PTClientList);
+begin
+  form3.Show;
+  client := list;
+  while client^.next <> nil do client := client^.next;
+  new(client^.next);
+  client := client^.next;
+  new(client^.data);
+end;
+
+procedure ChangeClientInfo(var list : PTClientList; count : integer);
+var
+  i : integer;
+begin
+  client := list;
+  for i := 0 to count do client := client^.next;
+end;
+
+procedure TForm3.AddButtonClick(Sender: TObject);
+begin
+  if Form3.CheckInputData then
+  begin
+    client^.data^.name := Form3.NameEdit.Text;
+    client^.data^.age := strToInt(Form3.AgeEdit.Text);
+    client^.data^.weight := strToInt(Form3.WeightEdit.Text);
+    client^.data^.height := strToInt(Form3.HeightEdit.Text);
+    client^.data^.partnerAge[MIN] := strToInt(Form3.AgeMinEdit.Text);
+    client^.data^.partnerAge[MAX] := strToInt(Form3.AgeMaxEdit.Text);
+    client^.data^.partnerWeight[MIN] := strToInt(Form3.WeightMinEdit.Text);
+    client^.data^.partnerWeight[MAX] := strToInt(Form3.WeightMaxEdit.Text);
+    client^.data^.partnerHeight[MIN] := strToInt(Form3.HeightMinEdit.Text);
+    client^.data^.partnerHeight[MAX] := strToInt(Form3.HeightMaxEdit.Text);
+    client^.next := nil;
+    client := nil;
+    Form3.Close;
+  end;
 end;
 
 procedure TForm3.BackButtonClick(Sender: TObject);

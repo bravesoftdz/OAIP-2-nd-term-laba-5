@@ -101,7 +101,6 @@ type
     procedure FormActivate(Sender: TObject);
     procedure CreateManList;
     procedure CreateWomanList;
-    procedure WomanAddButtonClick(Sender: TObject);
     procedure ManAddButtonClick(Sender: TObject);
     procedure RefreshImageClick(Sender: TObject);
   private
@@ -128,13 +127,17 @@ uses
 constructor TClient.Create(const clientItem : TClientItem);
 begin
   //сохранение переданных результатов
-  self.name := ClientItem.name;
-  self.age := ClientItem.age;
-  self.weight := ClientItem.weight;
-  self.height := ClientItem.height;
-  self.partnerAge := ClientItem.partnerAge;
-  self.partnerWeight := ClientItem.partnerWeight;
-  self.partnerHeight := ClientItem.partnerHeight;
+  try
+    self.name := ClientItem.name;
+    self.age := ClientItem.age;
+    self.weight := ClientItem.weight;
+    self.height := ClientItem.height;
+    self.partnerAge := ClientItem.partnerAge;
+    self.partnerWeight := ClientItem.partnerWeight;
+    self.partnerHeight := ClientItem.partnerHeight;
+  except
+    self := nil;
+  end;
 end;
 
 //функция сравнения по имени
@@ -265,13 +268,13 @@ begin
 end;
 
 procedure TForm1.ManAddButtonClick(Sender: TObject);
+var
+  client : TClient;
+  item : TClientItem;
 begin
-  Unit3.Form3.Show;
-end;
-
-procedure TForm1.WomanAddButtonClick(Sender: TObject);
-begin
-  Unit3.Form3.Show;
+  client := TClient.Create(item);
+  manList.Add(client);
+  Unit3.AddClient(manList.Items[]);
 end;
 
 end.
