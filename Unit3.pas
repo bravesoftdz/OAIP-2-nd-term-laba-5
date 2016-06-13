@@ -88,16 +88,20 @@ end;
 
 procedure FillFields;
 begin
-  Form3.NameEdit.Text := client^.data^.name;
-  Form3.AgeEdit.Text := intToStr(client^.data^.age);
-  Form3.WeightEdit.Text := intToStr(client^.data^.weight);
-  Form3.HeightEdit.Text := intToStr(client^.data^.height);
-  Form3.AgeMinEdit.Text := intToStr(client^.data^.partnerAge[MIN]);
-  Form3.AgeMaxEdit.Text := intToStr(client^.data^.partnerAge[MAX]);
-  Form3.WeightMinEdit.Text := intToStr(client^.data^.partnerWeight[MIN]);
-  Form3.WeightMaxEdit.Text := intToStr(client^.data^.partnerWeight[MAX]);
-  Form3.HeightMinEdit.Text := intToStr(client^.data^.partnerHeight[MIN]);
-  Form3.HeightMaxEdit.Text := intToStr(client^.data^.partnerHeight[MAX]);
+  try
+    Form3.NameEdit.Text := client^.data^.name;
+    Form3.AgeEdit.Text := intToStr(client^.data^.age);
+    Form3.WeightEdit.Text := intToStr(client^.data^.weight);
+    Form3.HeightEdit.Text := intToStr(client^.data^.height);
+    Form3.AgeMinEdit.Text := intToStr(client^.data^.partnerAge[MIN]);
+    Form3.AgeMaxEdit.Text := intToStr(client^.data^.partnerAge[MAX]);
+    Form3.WeightMinEdit.Text := intToStr(client^.data^.partnerWeight[MIN]);
+    Form3.WeightMaxEdit.Text := intToStr(client^.data^.partnerWeight[MAX]);
+    Form3.HeightMinEdit.Text := intToStr(client^.data^.partnerHeight[MIN]);
+    Form3.HeightMaxEdit.Text := intToStr(client^.data^.partnerHeight[MAX]);
+  except
+    ShowMessage('Запись не была выбрана');
+  end;
 end;
 
 procedure ChangeClientInfo(var list : PTClientList; count : integer);
@@ -105,9 +109,14 @@ var
   i : integer;
 begin
   form3.Show;
-  FillFields;
+  i := 0;
   client := list;
-  for i := 0 to count do client := client^.next;
+  while i <= count do
+  begin
+    client := client^.next;
+    if client^.visible then inc(i);
+  end;
+  FillFields;
 end;
 
 procedure DeleteClientRecord(var list : PTClientList; count : integer);
@@ -116,7 +125,12 @@ var
   pnt, temp : PTClientList;
 begin
   pnt := list;
-  for i := 0 to count - 1 do pnt := pnt^.next;
+  i := 0;
+  while i < count do
+  begin
+    pnt := pnt^.next;
+    if pnt^.visible then inc(i);
+  end;
   temp := pnt^.next;
   pnt^.next := pnt^.next^.next;
   Dispose(temp);
@@ -125,7 +139,7 @@ end;
 procedure TForm3.AddButtonClick(Sender: TObject);
 begin
   if Form3.CheckInputData then
-  begin
+  try
     client^.data^.name := Form3.NameEdit.Text;
     client^.data^.age := strToInt(Form3.AgeEdit.Text);
     client^.data^.weight := strToInt(Form3.WeightEdit.Text);
@@ -139,6 +153,8 @@ begin
     client^.next := nil;
     client := nil;
     Form3.Close;
+  except
+    ShowMessage('Запись не была выбран');
   end;
 end;
 

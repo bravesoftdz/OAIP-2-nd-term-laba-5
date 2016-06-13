@@ -1,0 +1,70 @@
+unit Unit3;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Unit1;
+
+type
+  TForm3 = class(TForm)
+    NameEdit: TEdit;
+    ClientInfoLabel: TLabel;
+    NameLabel: TLabel;
+    AgeLabel: TLabel;
+    AgeEdit: TEdit;
+    HeightEdit: TEdit;
+    HeightLabel: TLabel;
+    WeightLabel: TLabel;
+    WeightEdit: TEdit;
+    PartnerInfoLabel: TLabel;
+    MinimumLabel: TLabel;
+    AgeMaxEdit: TEdit;
+    AgeMinEdit: TEdit;
+    MaximumLabel: TLabel;
+    HeightMaxEdit: TEdit;
+    HeightMinEdit: TEdit;
+    WeightMaxEdit: TEdit;
+    WeightMinEdit: TEdit;
+    Splitter2: TSplitter;
+    BackButton: TButton;
+    AddButton: TButton;
+    procedure BackButtonClick(Sender: TObject);
+    function CheckInputData : boolean;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form3: TForm3;
+  customer : ^TClient;
+
+procedure AddClient(var client : TClient);
+
+implementation
+
+{$R *.dfm}
+
+function TForm3.CheckInputData : boolean;
+begin
+  Result := (Form3.NameEdit.Text <> '') and (Form3.AgeEdit.Text <> '') and
+            (Form3.HeightEdit.Text <> '') and (Form3.WeightEdit.Text <> '') and
+            (Form3.AgeMinEdit.Text <> '') and (Form3.AgeMaxEdit.Text <> '') and
+            (Form3.WeightMinEdit.Text <> '') and (Form3.WeightMaxEdit.Text <> '') and
+            (Form3.HeightMinEdit.Text <> '') and (Form3.HeightMaxEdit.Text <> '');
+end;
+
+procedure AddClient(var client : TClient);
+begin
+  form3.Show;
+  customer := @client;
+end;
+
+procedure TForm3.BackButtonClick(Sender: TObject);
+begin
+  Form3.Close;
+end;
+
+end.
